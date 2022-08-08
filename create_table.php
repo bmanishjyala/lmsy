@@ -70,23 +70,44 @@ else {
   echo "Error creating  questions table.";
 }
 
-// option table
+
+// course and question reference table
 
 
-$options_table = "CREATE TABLE if NOT EXISTS  options (
+$reference_table = "CREATE TABLE if NOT EXISTS  coursequestionsrelation (
   id INT  AUTO_INCREMENT PRIMARY KEY,
-  option_text TEXT,
+  
+  course_id INT ,
+  FOREIGN KEY (course_id) REFERENCES courses(id),
   question_id INT ,
   FOREIGN KEY (question_id) REFERENCES questions(id),
-  is_correct BOOLEAN,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
    
    )";
-if ($db_obj->createTable($options_table)) {
-echo "Table options  created successfully.";
+if ($db_obj->createTable($reference_table)) {
+echo "Table courseQuestionRelation  created successfully.";
 } else {
-echo "Error creating  options table.";
+echo "Error creating  courseQuestionRelation table.";
+}
+// course opted table
+
+
+$courseopted_table = "CREATE TABLE if NOT EXISTS  coursesopted (
+  id INT  AUTO_INCREMENT PRIMARY KEY,
+
+  user_id INT ,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  course_id INT ,
+  FOREIGN KEY (course_id) REFERENCES courses(id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+   
+   )";
+if ($db_obj->createTable($courseopted_table)) {
+echo "courseopted_table  created successfully.";
+} else {
+echo "Error creating  courseopted_table.";
 }
 
 
